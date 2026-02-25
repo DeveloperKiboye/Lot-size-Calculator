@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SLtoLot — Forex Lot Size Calculator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <header>
+    <div class="logo">
+      <span class="logo-sl">SL</span><span class="logo-to">to</span><span class="logo-lot">Lot</span>
+    </div>
+    <p class="tagline">What lot size makes <em>X pips</em> equal <em>Y dollars?</em></p>
+  </header>
+
+  <main>
+    <form id="calcForm" autocomplete="off">
+
+      <!-- Row 1: Balance + Risk -->
+      <section class="card">
+        <h2 class="card-title">Account</h2>
+        <div class="field-row">
+          <div class="field">
+            <label for="balance">Balance</label>
+            <div class="input-wrap prefix">
+              <span class="prefix-symbol" id="balancePrefixSymbol">$</span>
+              <input type="number" id="balance" placeholder="10000" min="1" step="any" required />
+            </div>
+          </div>
+          <div class="field">
+            <label for="accountCurrency">Account Currency</label>
+            <input type="text" id="accountCurrency" placeholder="USD" maxlength="3" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Risk Type</label>
+          <div class="toggle-group">
+            <button type="button" class="toggle-btn active" id="btnPercent" onclick="setRiskType('percent')">% Risk</button>
+            <button type="button" class="toggle-btn" id="btnFixed" onclick="setRiskType('fixed')">Fixed $</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="riskValue" id="riskLabel">Risk %</label>
+          <div class="input-wrap suffix">
+            <input type="number" id="riskValue" placeholder="1" min="0.01" step="any" required />
+            <span class="suffix-symbol" id="riskSuffix">%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Row 2: Trade -->
+      <section class="card">
+        <h2 class="card-title">Trade</h2>
+        <div class="field-row">
+          <div class="field">
+            <label for="pair">Currency Pair</label>
+            <input type="text" id="pair" placeholder="EURUSD" maxlength="8" required />
+          </div>
+          <div class="field">
+            <label for="stopLoss">Stop Loss (pips)</label>
+            <input type="number" id="stopLoss" placeholder="20" min="0.1" step="any" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="contractSize">Contract Size</label>
+          <input type="number" id="contractSize" value="100000" min="1" step="1" required />
+        </div>
+      </section>
+
+      <!-- Conversion Rate (dynamic) -->
+      <section class="card" id="conversionCard" style="display:none">
+        <h2 class="card-title">Conversion Rate</h2>
+        <p class="conv-hint" id="convHint"></p>
+        <div class="field">
+          <label for="convRate" id="convRateLabel">Conversion Rate</label>
+          <input type="number" id="convRate" placeholder="1.0" min="0.00001" step="any" />
+        </div>
+      </section>
+
+    </form>
+
+    <!-- Output -->
+    <section class="result-card" id="resultCard">
+      <div class="result-header">
+        <span class="result-icon">◈</span>
+        <span>Result</span>
+      </div>
+      <div id="resultContent" class="result-empty">
+        Fill in the fields above to see your lot size
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>SLtoLot &mdash; Client-side only &bull; No data sent anywhere</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
